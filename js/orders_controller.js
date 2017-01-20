@@ -15,7 +15,9 @@ cashadApp.service('UsersService', function ($resource) {
 })
 
 .service('OrdersService', function ($resource) {
-    return $resource(apiURL+'orders');
+    return $resource(apiURL+'orders/:id', {id: '@_id'}, {
+        update: {method: 'PUT'}
+    });
 })
 
 .controller('OrdersCtrl', function ($scope, UsersService, ProductsService, OrdersService) {
@@ -30,10 +32,11 @@ cashadApp.service('UsersService', function ($resource) {
     $scope.show_edit = false;
     $scope.show_new = false;
     $scope.editOrder = {};
+    $scope.orders = {};
 
     $scope.users = UsersService.query();
     $scope.products = ProductsService.query();
-    $scope.orders = OrdersService.query({expand: 'user,product'});
+    //$scope.orders = OrdersService.query({expand: 'user,product'});
 
     $scope.updateFilters = function () {
         console.log("Filters updated to ",$scope.filters);
@@ -43,9 +46,30 @@ cashadApp.service('UsersService', function ($resource) {
         $scope.show_new = true;
     };
 
+    $scope.updateData = function () {
+        $scope.orders = OrdersService.query({expand: 'user,product'});
+    };
+
     $scope.doNew = function () {
-        UsersService.save($scope.newOrder, function (resp) {
+        OrdersService.save($scope.newOrder, function (resp) {
             console.log("Api response",resp);
+            //TODO: Process and update table list
+        }, function (errData) {
+            console.log("Error response",errData);
+        });
+    };
+
+    $scope.doEdit = function () {
+        var editData = {
+            _id: $scope.editOrder.id,
+            user_id: $scope.editOrder.user.id,
+            product_id: $scope.editOrder.product.id,
+            quantity: $scope.editOrder.quantity
+        };
+
+        OrdersService.update(editData, function (resp) {
+            console.log("Update response", resp);
+            //TODO: Process and show message
         });
     };
 
@@ -57,7 +81,14 @@ cashadApp.service('UsersService', function ($resource) {
     };
 
     $scope.startDelete = function (order) {
-        console.log("I will delete order", order);
+        if (confirm("Are you sure you want to delete?")) {
+            OrdersService.delete({id: order.id}, function (resp) {
+                console.log("Successfully removed", resp, order);
+                $scope.updateData();
+            }, function (errData) {
+                console.log("Error Removing", order, errData);
+            })
+        }
     };
 
     $scope.hideEdit = function () {
@@ -67,4 +98,6 @@ cashadApp.service('UsersService', function ($resource) {
     $scope.hideNew = function () {
         $scope.show_new = false;
     };
+
+    $scope.updateData();
 });

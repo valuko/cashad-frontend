@@ -41,7 +41,7 @@
                 <h3>Edit Order</h3>
             </div>
             <div class="row">
-                <form class="form-horizontal">
+                <form class="form-horizontal" ng-submit="doEdit()">
                     <div class="form-group">
                         <label for="ed-user" class="col-sm-2 control-label">User</label>
                         <div class="col-sm-4">
@@ -79,11 +79,11 @@
                 <h3>Add New Order</h3>
             </div>
             <div class="row">
-                <form class="form-horizontal">
+                <form class="form-horizontal" ng-submit="doNew()">
                     <div class="form-group">
                         <label for="user" class="col-sm-2 control-label">User</label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="user" ng-model="newOrder.user_id">
+                            <select class="form-control" id="user" ng-model="newOrder.user_id" required>
                                 <option ng-repeat="usr in users" value="{{usr.id}}">{{usr.name}}</option>
                             </select>
                         </div>
@@ -91,7 +91,7 @@
                     <div class="form-group">
                         <label for="product" class="col-sm-2 control-label">Product</label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="product" ng-model="newOrder.user_id">
+                            <select class="form-control" id="product" ng-model="newOrder.product_id" required>
                                 <option ng-repeat="prod in products" value="{{prod.id}}">{{prod.name}}</option>
                             </select>
                         </div>
@@ -99,7 +99,7 @@
                     <div class="form-group">
                         <label for="qty" class="col-sm-2 control-label">Quantity</label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control" id="qty" placeholder="Quantity" ng-model="newOrder.quantity">
+                            <input type="number" required class="form-control" id="qty" placeholder="Quantity" ng-model="newOrder.quantity">
                         </div>
                     </div>
                     <div class="row">
