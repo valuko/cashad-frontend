@@ -1,0 +1,21 @@
+{
+  "name": "cashad_front",
+  "authors": [
+    "Victor Aluko <victor.aluko@gmail.com>"
+  ],
+  "description": "CashAd Front project",
+  "main": "index.html",
+  "keywords": [
+    "CashAd"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
