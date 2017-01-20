@@ -43,6 +43,12 @@ cashadApp.service('UsersService', function ($resource) {
         $scope.show_new = true;
     };
 
+    $scope.doNew = function () {
+        UsersService.save($scope.newOrder, function (resp) {
+            console.log("Api response",resp);
+        });
+    };
+
     $scope.startUpdate = function (order) {
         console.log("I will update order", order);
         $scope.show_edit = true;

@@ -45,15 +45,13 @@
                     <div class="form-group">
                         <label for="ed-user" class="col-sm-2 control-label">User</label>
                         <div class="col-sm-4">
-                            <select class="form-control" ng-options="usr.name for usr in users track by user.id" ng-model="editOrder.user.id" id="ed-user"></select>
+                            <select class="form-control" ng-options="usr.name for usr in users track by usr.id" ng-model="editOrder.user" id="ed-user"></select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="ed-product" class="col-sm-2 control-label">Product</label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="ed-product" ng-model="editOrder.product.id">
-                                <option ng-repeat="prod in products" value="{{prod.id}}">{{prod.name}}</option>
-                            </select>
+                            <select class="form-control" ng-model="editOrder.product" ng-options="prod.name for prod in products track by prod.id" id="ed-product"></select>
                         </div>
                     </div>
                     <div class="form-group">
