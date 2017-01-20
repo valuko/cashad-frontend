@@ -27,6 +27,9 @@ cashadApp.service('UsersService', function ($resource) {
     $scope.filters = {
         period: null, search: null
     };
+    $scope.show_edit = false;
+    $scope.show_new = false;
+    $scope.editOrder = {};
 
     $scope.users = UsersService.query();
     $scope.products = ProductsService.query();
@@ -36,11 +39,26 @@ cashadApp.service('UsersService', function ($resource) {
         console.log("Filters updated to ",$scope.filters);
     };
 
+    $scope.startNew = function () {
+        $scope.show_new = true;
+    };
+
     $scope.startUpdate = function (order) {
         console.log("I will update order", order);
+        $scope.show_edit = true;
+        $scope.editOrder = order;
+        $scope.show_new = false;
     };
 
     $scope.startDelete = function (order) {
         console.log("I will delete order", order);
-    }
+    };
+
+    $scope.hideEdit = function () {
+        $scope.show_edit = false;
+        $scope.editOrder = {};
+    };
+    $scope.hideNew = function () {
+        $scope.show_new = false;
+    };
 });
