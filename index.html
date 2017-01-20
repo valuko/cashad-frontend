@@ -141,15 +141,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="hidden-xs">1</td>
-                            <td>John Doe</td>
-                            <td>Computer</td>
-                            <td>2017-01-12</td>
-                            <td>29.9</td>
+                        <tr ng-repeat="ord in orders">
+                            <td class="hidden-xs">{{$index + 1}}</td>
+                            <td>{{ord.user.name}}</td>
+                            <td>{{ord.product.name}}</td>
+                            <td>{{ord.date}}</td>
+                            <td>{{ord.quantity * ord.product.price}}</td>
                             <td align="center">
-                                <a class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a>
-                                <a class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+                                <a class="btn btn-default" ng-click="startUpdate(ord)"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a class="btn btn-danger" ng-click="startDelete(ord)"><span class="glyphicon glyphicon-trash"></span></a>
                             </td>
                         </tr>
                         </tbody>

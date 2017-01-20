@@ -34,5 +34,13 @@ cashadApp.service('UsersService', function ($resource) {
 
     $scope.updateFilters = function () {
         console.log("Filters updated to ",$scope.filters);
+    };
+
+    $scope.startUpdate = function (order) {
+        console.log("I will update order", order);
+    };
+
+    $scope.startDelete = function (order) {
+        console.log("I will delete order", order);
     }
 });
