@@ -24,7 +24,15 @@ cashadApp.service('UsersService', function ($resource) {
         product_id: null,
         qty: null
     };
+    $scope.filters = {
+        period: null, search: null
+    };
 
     $scope.users = UsersService.query();
     $scope.products = ProductsService.query();
+    $scope.orders = OrdersService.query({expand: 'user,product'});
+
+    $scope.updateFilters = function () {
+        console.log("Filters updated to ",$scope.filters);
+    }
 });

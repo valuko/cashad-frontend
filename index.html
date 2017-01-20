@@ -95,7 +95,7 @@
                                 <span>Today</span>
                             </div>
                             <div class="col col-xs-4">
-                                <input type="radio" name="fromRadio">
+                                <input type="radio" ng-model="filters.period" value="today" ng-change="updateFilters()">
                             </div>
                         </div>
                         <div class="row">
@@ -103,7 +103,7 @@
                                 <span>This Week</span>
                             </div>
                             <div class="col col-xs-4">
-                                <input type="radio" name="fromRadio">
+                                <input type="radio" ng-model="filters.period" value="week" ng-change="updateFilters()">
                             </div>
                         </div>
                         <div class="row">
@@ -111,7 +111,7 @@
                                 <span>All Time</span>
                             </div>
                             <div class="col col-xs-4">
-                                <input type="radio" name="fromRadio">
+                                <input type="radio" ng-model="filters.period" value="all" ng-change="updateFilters()">
                             </div>
                         </div>
                     </div>
@@ -119,9 +119,9 @@
                         <div class="col-xs-10">
                             <div id="imaginary_container">
                                 <div class="input-group stylish-input-group">
-                                    <input type="text" class="form-control"  placeholder="Search" >
+                                    <input type="text" class="form-control"  placeholder="Search" ng-model="filters.search" >
                                     <span class="input-group-addon">
-                                        <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                                        <button type="submit" ng-click="updateFilters()"><span class="glyphicon glyphicon-search"></span></button>
                                     </span>
                                 </div>
                             </div>
