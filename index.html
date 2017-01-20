@@ -34,6 +34,11 @@
 <body ng-app="cashad">
     <div class="container" ng-controller="OrdersCtrl">
 
+        <div class="alert alert-dismissible cashad-alert" ng-class="alert_type" role="alert" ng-show="show_alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong ng-bind="alert_msg"></strong>
+        </div>
+
         <h1>Orders Management system</h1>
 
         <div class="row" style="margin-bottom: 30px;" ng-hide="!show_edit">

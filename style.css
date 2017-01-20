@@ -52,6 +52,15 @@
     margin-top: 5px;
 }
 
+.cashad-alert {
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+.cashad-form-div {
+    margin-bottom: 30px !important;
+}
+
 /*
 used to vertically center elements, may need modification if you're not using default sizes.
 */

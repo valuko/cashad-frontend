@@ -31,12 +31,29 @@ cashadApp.service('UsersService', function ($resource) {
     };
     $scope.show_edit = false;
     $scope.show_new = false;
+    $scope.show_alert = false;
+    $scope.alert_type = "";
+    $scope.alert_msg = "";
     $scope.editOrder = {};
     $scope.orders = {};
 
     $scope.users = UsersService.query();
     $scope.products = ProductsService.query();
     //$scope.orders = OrdersService.query({expand: 'user,product'});
+
+    $scope.PopMsg = function (msg, msgtype) {
+
+        if (msgtype == "success") {
+            $scope.alert_type = "alert-success";
+        } else {
+            $scope.alert_type = "alert-danger";
+        }
+        $scope.alert_msg = msg;
+        $scope.show_alert = true;
+        setTimeout(function () {
+            $scope.show_alert = false;
+        }, 3000);
+    };
 
     $scope.updateFilters = function () {
         console.log("Filters updated to ",$scope.filters);
@@ -53,9 +70,13 @@ cashadApp.service('UsersService', function ($resource) {
     $scope.doNew = function () {
         OrdersService.save($scope.newOrder, function (resp) {
             console.log("Api response",resp);
-            //TODO: Process and update table list
+            $scope.PopMsg("New order successfully created", 'success');
+            $scope.updateData();
+
+            $scope.hideNew();
         }, function (errData) {
             console.log("Error response",errData);
+            $scope.PopMsg("New order could not be created", 'error');
         });
     };
 
@@ -69,7 +90,12 @@ cashadApp.service('UsersService', function ($resource) {
 
         OrdersService.update(editData, function (resp) {
             console.log("Update response", resp);
-            //TODO: Process and show message
+            $scope.PopMsg("Order successfully updated", 'success');
+
+            $scope.hideEdit();
+        }, function (errData) {
+            console.log("Update error response", errData);
+            $scope.PopMsg("Order could not be updated", 'error');
         });
     };
 
@@ -84,9 +110,11 @@ cashadApp.service('UsersService', function ($resource) {
         if (confirm("Are you sure you want to delete?")) {
             OrdersService.delete({id: order.id}, function (resp) {
                 console.log("Successfully removed", resp, order);
+                $scope.PopMsg("Order successfully deleted", 'success');
                 $scope.updateData();
             }, function (errData) {
                 console.log("Error Removing", order, errData);
+                $scope.PopMsg("Order could not be removed", 'error');
             })
         }
     };
@@ -97,6 +125,7 @@ cashadApp.service('UsersService', function ($resource) {
     };
     $scope.hideNew = function () {
         $scope.show_new = false;
+        $scope.newOrder = {};
     };
 
     $scope.updateData();
