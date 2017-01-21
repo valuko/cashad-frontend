@@ -201,19 +201,14 @@
                 </div>
                 <div class="panel-footer">
                     <div class="row">
-                        <div class="col col-xs-4">Page 1 of 5
+                        <div class="col col-xs-4">Page <span ng-bind="pagination.current_page"></span> of <span ng-bind="pagination.page_count"></span>
                         </div>
-                        <div class="col col-xs-8">
+                        <div class="col col-xs-4">
+                            Displaying <span ng-bind="orders.length"></span> of <span ng-bind="pagination.total_count"></span> Records
+                        </div>
+                        <div class="col col-xs-4">
                             <ul class="pagination hidden-xs pull-right">
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                            </ul>
-                            <ul class="pagination visible-xs pull-right">
-                                <li><a href="#">«</a></li>
-                                <li><a href="#">»</a></li>
+                                <li ng-repeat="a in range(pagination.page_count) track by $index"><a href="#">{{$index + 1}}</a></li>
                             </ul>
                         </div>
                     </div>

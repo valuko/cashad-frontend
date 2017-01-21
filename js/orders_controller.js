@@ -37,6 +37,12 @@ cashadApp.service('UsersService', function ($resource) {
     $scope.alert_msg = "";
     $scope.editOrder = {};
     $scope.orders = {};
+    $scope.pagination = {
+        page_count: 1,
+        current_page: 1,
+        total_count: 0,
+        per_page: 5
+    };
 
     $scope.users = UsersService.query();
     $scope.products = ProductsService.query();
@@ -62,9 +68,15 @@ cashadApp.service('UsersService', function ($resource) {
 
     $scope.updateData = function () {
         $scope.orders = OrdersService.query($scope.filters, function (resp, headers) {
-            console.log("Headers", headers());
+            $scope.pagination.current_page = headers('x-pagination-current-page');
+            $scope.pagination.page_count = headers('x-pagination-page-count');
+            $scope.pagination.per_page = headers('x-pagination-per-page');
+            $scope.pagination.total_count = headers('x-pagination-total-count');
+
             if (typeof resp[0] == "undefined") {
                 $scope.PopMsg("No record matches your search criteria", "warning");
+            } else {
+                $scope.show_alert = false;
             }
         }, function (errData, status, headers, config) {
 
