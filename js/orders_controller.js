@@ -27,7 +27,8 @@ cashadApp.service('UsersService', function ($resource) {
         qty: null
     };
     $scope.filters = {
-        period: null, search: null
+        period: null, name: null,
+        expand: 'user,product'
     };
     $scope.show_edit = false;
     $scope.show_new = false;
@@ -39,15 +40,10 @@ cashadApp.service('UsersService', function ($resource) {
 
     $scope.users = UsersService.query();
     $scope.products = ProductsService.query();
-    //$scope.orders = OrdersService.query({expand: 'user,product'});
 
     $scope.PopMsg = function (msg, msgtype) {
 
-        if (msgtype == "success") {
-            $scope.alert_type = "alert-success";
-        } else {
-            $scope.alert_type = "alert-danger";
-        }
+        $scope.alert_type = "alert-"+msgtype;
         $scope.alert_msg = msg;
         $scope.show_alert = true;
         setTimeout(function () {
@@ -57,6 +53,7 @@ cashadApp.service('UsersService', function ($resource) {
 
     $scope.updateFilters = function () {
         console.log("Filters updated to ",$scope.filters);
+        $scope.updateData();
     };
 
     $scope.startNew = function () {
@@ -64,7 +61,14 @@ cashadApp.service('UsersService', function ($resource) {
     };
 
     $scope.updateData = function () {
-        $scope.orders = OrdersService.query({expand: 'user,product'});
+        $scope.orders = OrdersService.query($scope.filters, function (resp, headers) {
+            console.log("Headers", headers());
+            if (typeof resp[0] == "undefined") {
+                $scope.PopMsg("No record matches your search criteria", "warning");
+            }
+        }, function (errData, status, headers, config) {
+
+        });
     };
 
     $scope.doNew = function () {
@@ -76,7 +80,7 @@ cashadApp.service('UsersService', function ($resource) {
             $scope.hideNew();
         }, function (errData) {
             console.log("Error response",errData);
-            $scope.PopMsg("New order could not be created", 'error');
+            $scope.PopMsg("New order could not be created", 'danger');
         });
     };
 
@@ -95,7 +99,7 @@ cashadApp.service('UsersService', function ($resource) {
             $scope.hideEdit();
         }, function (errData) {
             console.log("Update error response", errData);
-            $scope.PopMsg("Order could not be updated", 'error');
+            $scope.PopMsg("Order could not be updated", 'danger');
         });
     };
 
@@ -114,7 +118,7 @@ cashadApp.service('UsersService', function ($resource) {
                 $scope.updateData();
             }, function (errData) {
                 console.log("Error Removing", order, errData);
-                $scope.PopMsg("Order could not be removed", 'error');
+                $scope.PopMsg("Order could not be removed", 'danger');
             })
         }
     };
